@@ -1,17 +1,15 @@
 'use strict';
 let _ = require('lodash');
 
-var single_element = function(collection){
+var single_element = function (collection) {
   let evenArray = _.chain(collection)
-    .remove(n => (collection.includes(n) + 1) % 2 === 0)
+    .filter((item, index, items) => (index + 1) % 2 === 0)
     .value();
 
- // let result = [];
-
-//   return _.chain(evenArray)
-//     .remove(n => _.size(result) === 0 || result.includes(n))
-//     .value();
-  return evenArray;
- };
+ return _.chain(evenArray)
+    .xor()
+    .filter((item, index, items) => item !== evenArray[index])
+    .value();
+};
 
 module.exports = single_element;
